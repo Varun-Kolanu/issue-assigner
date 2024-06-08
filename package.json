@@ -1,19 +1,21 @@
 {
-  "name": "csoc-bot",
+  "name": "issue-assigner",
   "version": "1.0.0",
   "private": true,
-  "description": "A bot for managing workflow of CSOC projects",
+  "description": "A bot for managing issue assignments",
   "author": "Varun Kolanu",
   "license": "ISC",
-  "homepage": "https://github.com//",
+  "homepage": "https://github.com/Varun-Kolanu/issue-assigner",
   "keywords": [
     "probot",
     "github",
-    "probot-app"
+    "probot-app",
+    "issue",
+    "issue-assigner"
   ],
   "scripts": {
-    "start": "node ./main.js",
-    "dev": "nodemon ./main.js",
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js",
     "test": "node --test"
   },
   "dependencies": {

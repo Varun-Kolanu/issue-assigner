@@ -62,7 +62,7 @@ default_permissions:
 
   # Repository contents, commits, branches, downloads, releases, and merges.
   # https://developer.github.com/v3/apps/permissions/#permission-on-contents
-  # contents: read
+  contents: read
 
   # Deployments and deployment statuses.
   # https://developer.github.com/v3/apps/permissions/#permission-on-deployments
@@ -124,12 +124,12 @@ default_permissions:
   # https://developer.github.com/v3/apps/permissions/
   # organization_administration: read
 # The name of the GitHub App. Defaults to the name specified in package.json
-name: CSOC Bot
+name: Issue Assigner
 # The homepage of your GitHub App.
 # url: https://example.com/
 
 # A description of the GitHub App.
-description: Bot for CSOC
+description: A bot for managing issue assignments
 # Set to true when your GitHub App is available to the public or false when it is only accessible to the owner of the app.
 # Default: true
 # public: false
