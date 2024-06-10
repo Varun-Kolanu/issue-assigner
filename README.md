@@ -2,6 +2,8 @@
 
 This GitHub bot helps manage issue assignments in a repository by automatically assigning or unassigning issues based on predefined rules and user commands in comments. The bot is implemented using Probot, a framework for building GitHub Apps.
 
+If you find this project helpful, please consider giving it a star ⭐ on GitHub. It helps others discover the project and shows your appreciation for the work!
+
 # Features
 
 - Automatic Assignment: Users can request assignment to an issue by commenting with a specific command.
@@ -64,6 +66,7 @@ This GitHub bot helps manage issue assignments in a repository by automatically 
 
 3. You can remove a line from yml if you don't need that feature.
 4. You can edit the values in the yml to customize the comments from the bot.
+5. For example, commenting '@issue-asigner claim' will assign the issue and '@issue-assigner abandon' will remove the assignment.
 
 # Contributing
 
