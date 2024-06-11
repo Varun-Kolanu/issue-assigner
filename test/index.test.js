@@ -18,8 +18,7 @@ const configYml = fs.readFileSync(
   path.join(__dirname, "fixtures/sample-config.yml"),
 );
 
-const buf = Buffer.from(configYml)
-const encodedConfigYml = buf.toString("base64");
+const encodedConfigYml = configYml.toString("base64");
 
 
 describe("Issue Assigner App", () => {
