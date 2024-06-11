@@ -95,10 +95,12 @@ export default async (context) => {
       })
     );
 
-    await context.octokit.issues.createComment(
-      context.issue({
-        body: `@${commenter} ` + config[should_unassign],
-      })
-    );
+    if (should_unassign === UnAssignment.UNASSIGN_COMMENT) {
+      await context.octokit.issues.createComment(
+        context.issue({
+          body: `@${commenter} ` + config[should_unassign],
+        })
+      );
+    }
   }
 };

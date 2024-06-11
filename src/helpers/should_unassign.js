@@ -1,7 +1,7 @@
 export const UnAssignment = Object.freeze({
   ALREADY: "issue-was-not-assigned",
   UNASSIGN_COMMENT: "unassigned-comment",
-  UNASSIGN,
+  UNASSIGN: "UNASSIGN",
   SKIP: "Skip",
 });
 
