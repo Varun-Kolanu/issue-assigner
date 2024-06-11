@@ -1,6 +1,9 @@
+import axios from "axios";
+
 export const getConfig = async function (context) {
   // Load the configuration
   const config = await context.config("issue-assigner.yml");
+  console.log("CONFIG ", config);
 
   // Check if config and name key exists
   if (!config || !config.name) {

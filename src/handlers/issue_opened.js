@@ -2,9 +2,10 @@ import { getConfig } from "../utils/config.js";
 
 export default async (context) => {
   const { issue } = context.payload;
-  const collaborators = (
-    await context.octokit.repos.listCollaborators(context.issue({}))
-  ).data.map((coll) => coll.login);
+  const collaboratorsJson = await context.octokit.repos.listCollaborators(
+    context.repo({})
+  );
+  const collaborators = collaboratorsJson.data.map((coll) => coll.login);
   const issue_opener = issue.user.login;
 
   const config = await getConfig(context);

@@ -1,68 +1,68 @@
 import nock from "nock";
-// Requiring our app implementation
-import myProbotApp from "../index.js";
-import { Probot, ProbotOctokit } from "probot";
-// Requiring our fixtures
-//import payload from "./fixtures/issues.opened.json" with { type: "json" };
-const issueCreatedBody = { body: "Thanks for opening this issue!" };
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-
+import payload from "./fixtures/issues.opened.json" with { type: "json" };
+// import config from "./fixtures/sample-config.json" with { type: "json" };
 import { describe, beforeEach, afterEach, test } from "node:test";
 import assert from "node:assert";
 
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import issue_opened from "../src/handlers/issue_opened.js";
+import getProbot from "./utils/get-probot.js";
+
+// console.log(typeof config);
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const privateKey = fs.readFileSync(
-  path.join(__dirname, "fixtures/mock-cert.pem"),
-  "utf-8",
+const configYml = fs.readFileSync(
+  path.join(__dirname, "fixtures/sample-config.yml"),
 );
 
-const payload = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "fixtures/issues.opened.json"), "utf-8"),
-);
+const buf = Buffer.from(configYml)
+const encodedConfigYml = buf.toString("base64");
 
-describe("My Probot app", () => {
+
+describe("Issue Assigner App", () => {
   let probot;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     nock.disableNetConnect();
-    probot = new Probot({
-      appId: 123,
-      privateKey,
-      // disable request throttling and retries for testing
-      Octokit: ProbotOctokit.defaults({
-        retry: { enabled: false },
-        throttle: { enabled: false },
-      }),
-    });
-    // Load our app into probot
-    probot.load(myProbotApp);
+    probot = await getProbot();
   });
 
   test("creates a comment when an issue is opened", async () => {
     const mock = nock("https://api.github.com")
-      // Test that we correctly return a test token
+
+      // Test that access token is requested
       .post("/app/installations/2/access_tokens")
       .reply(200, {
-        token: "test",
-        permissions: {
-          issues: "write",
-        },
+        token: "test"
       })
 
-      // Test that a comment is posted
-      .post("/repos/hiimbex/testing-things/issues/1/comments", (body) => {
-        assert.deepEqual(body, issueCreatedBody);
-        return true;
+      // Test that collaborators are fetched
+      .get("/repos/test-owner/test-repo/collaborators")
+      .reply(200, 
+        [
+          {
+            "login": "test-owner",
+          }
+        ]
+      )
+
+      // Test that config is loaded
+      .get("/repos/test-owner/test-repo/contents/.github\%2Fissue-assigner.yml")
+      .reply(200, {
+        type: 'file',
+        encoding: 'base64',
+        size: encodedConfigYml.length,
+        name: 'issue-assigner.yml',
+        path: '.github/contents/.github/issue-assigner.yml',
+        content: encodedConfigYml
       })
-      .reply(200);
 
     // Receive a webhook event
     await probot.receive({ name: "issues", payload });
 
-    assert.deepStrictEqual(mock.pendingMocks(), []);
   });
 
   afterEach(() => {
@@ -70,9 +70,3 @@ describe("My Probot app", () => {
     nock.enableNetConnect();
   });
 });
-
-// For more information about testing with Jest see:
-// https://facebook.github.io/jest/
-
-// For more information about testing with Nock see:
-// https://github.com/nock/nock

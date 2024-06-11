@@ -1,12 +1,10 @@
 import issue_comment_created from "./handlers/issue_comment_created.js";
 import issue_opened from "./handlers/issue_opened.js";
-import bodyParser from "body-parser";
 
 export default (app, { getRouter }) => {
   const router = getRouter("/");
-  router.use(bodyParser.json());
-  router.get("/", (_, res) => {
-    res.send("Welcome to Issue Assigner");
+  router.get("/", (req, res) => {
+    res.status(200).send("Welcome to Issue Assigner");
   });
 
   router.post("/webhook", (req, res) => {
