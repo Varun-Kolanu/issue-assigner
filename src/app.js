@@ -1,9 +1,11 @@
+import bodyParser from "body-parser";
 import issue_comment_created from "./handlers/issue_comment_created.js";
 import issue_opened from "./handlers/issue_opened.js";
 
-export default (app, { getRouter }) => {
-  const router = getRouter("/");
-  router.get("/", (req, res) => {
+export default async (app, { getRouter }) => {
+  const router = getRouter("/issue-assigner");
+  router.use(bodyParser.json());
+  router.get("/", async (req, res) => {
     res.status(200).send("Welcome to Issue Assigner");
   });
 

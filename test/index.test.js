@@ -7,26 +7,24 @@ import assert from "node:assert";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import issue_opened from "../src/handlers/issue_opened.js";
-import getProbot from "./utils/get-probot.js";
+import getProbotConfig from "./utils/get-probot.js";
 
-// console.log(typeof config);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const configYml = fs.readFileSync(
   path.join(__dirname, "fixtures/sample-config.yml"),
 );
-
-const encodedConfigYml = configYml.toString("base64");
-
+const YmlStringified = configYml.toString("utf-8");
 
 describe("Issue Assigner App", () => {
   let probot;
+  let server;
 
   beforeEach(async () => {
     nock.disableNetConnect();
-    probot = await getProbot();
+    server = await getProbotConfig();
+    probot = server.probotApp;
   });
 
   test("creates a comment when an issue is opened", async () => {
@@ -50,14 +48,7 @@ describe("Issue Assigner App", () => {
 
       // Test that config is loaded
       .get("/repos/test-owner/test-repo/contents/.github\%2Fissue-assigner.yml")
-      .reply(200, {
-        type: 'file',
-        encoding: 'base64',
-        size: encodedConfigYml.length,
-        name: 'issue-assigner.yml',
-        path: '.github/contents/.github/issue-assigner.yml',
-        content: encodedConfigYml
-      })
+      .reply(200, YmlStringified)
 
     // Receive a webhook event
     await probot.receive({ name: "issues", payload });

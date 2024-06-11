@@ -1,3 +1,4 @@
+import { OpenerIsMaintainer, issueOpener } from "../helpers/issue_opener.js";
 import { getConfig } from "../utils/config.js";
 
 export default async (context) => {
@@ -6,31 +7,18 @@ export default async (context) => {
     context.repo({})
   );
   const collaborators = collaboratorsJson.data.map((coll) => coll.login);
-  const issue_opener = issue.user.login;
+  const issue_opener_username = issue.user.login;
 
   const config = await getConfig(context);
-  const issueOpenerNotMaintainer = "issue-opener-not-maintainer";
-  const issueOpenerIsMaintainer = "issue-opener-is-maintainer";
 
-  // Issue opener is not a maintainer
-  if (
-    issueOpenerNotMaintainer in config &&
-    !collaborators.includes(issue_opener)
-  ) {
-    const issueComment = context.issue({
-      body: `@${issue_opener} ` + config[issueOpenerNotMaintainer],
-    });
-    return await context.octokit.issues.createComment(issueComment);
-  }
-
-  // Issue opener is a maintainer
-  if (
-    issueOpenerIsMaintainer in config &&
-    collaborators.includes(issue_opener)
-  ) {
-    const issueComment = context.issue({
-      body: config[issueOpenerIsMaintainer],
-    });
-    return await context.octokit.issues.createComment(issueComment);
-  }
+  const issue_opener = issueOpener(
+    config,
+    collaborators,
+    issue_opener_username
+  );
+  if (issue_opener === OpenerIsMaintainer.SKIP) return;
+  const issueComment = context.issue({
+    body: `@${issue_opener} ` + config[issue_opener],
+  });
+  return await context.octokit.issues.createComment(issueComment);
 };
