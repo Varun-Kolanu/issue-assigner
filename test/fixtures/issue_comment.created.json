@@ -1,5 +1,5 @@
 {
-  "action": "opened",
+  "action": "created",
   "issue": {
     "number": 1
   },
@@ -7,6 +7,11 @@
     "name": "test-repo",
     "owner": {
       "login": "test-owner"
+    }
+  },
+  "comment": {
+    "user": {
+      "login": "test"
     }
   },
   "installation": {

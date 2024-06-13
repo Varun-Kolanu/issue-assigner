@@ -12,16 +12,21 @@ export default async (context) => {
   const collaboratorsJson = await context.octokit.repos.listCollaborators(
     context.repo({})
   );
-  const collaborators = collaboratorsJson.data.map((coll) => coll.login);
+  const collaborators = collaboratorsJson.data
+    .filter((coll) => {
+      return (
+        coll.permissions.admin ||
+        coll.permissions.maintain ||
+        coll.permissions.triage
+      );
+    })
+    .map((coll) => coll.login);
 
   if (skipCommenters(commenter, collaborators)) return;
 
   const config = await getConfig(context);
-  const assignPromptKey = "assign-prompt";
-  const unassignPromptKey = "unassign-prompt";
 
   const assignees = issue.assignees.map((assigneeJson) => assigneeJson.login);
-  const assigneeCount = assignees.length;
 
   const request = checkRequest(comment.body, config);
   if (request === Request.SKIP) return;

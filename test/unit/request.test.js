@@ -2,11 +2,11 @@ import { describe, test } from "node:test";
 import assert from "node:assert";
 import { Request, checkRequest } from "../../src/helpers/check_request.js";
 
-describe("If Request", () => {
+describe("Check Request Functionality", () => {
   let config1;
   let config2;
   let comments;
-  test("is to assign", () => {
+  test("identifies comments requesting assignment correctly", () => {
     config1 = {
       "assign-prompt": "claim",
     };
@@ -18,7 +18,7 @@ describe("If Request", () => {
     });
   });
 
-  test("is to unassign", () => {
+  test("identifies comments requesting unassignment correctly", () => {
     config1 = {
       "unassign-prompt": "abandon",
     };
@@ -30,7 +30,7 @@ describe("If Request", () => {
     });
   });
 
-  test("Nothing", () => {
+  test("skips comments not related to assignment or unassignment", () => {
     config1 = {
       "assign-prompt": "claim",
       "unassign-prompt": "abandon",

@@ -6,7 +6,15 @@ export default async (context) => {
   const collaboratorsJson = await context.octokit.repos.listCollaborators(
     context.repo({})
   );
-  const collaborators = collaboratorsJson.data.map((coll) => coll.login);
+  const collaborators = collaboratorsJson.data
+    .filter((coll) => {
+      return (
+        coll.permissions.admin ||
+        coll.permissions.maintain ||
+        coll.permissions.triage
+      );
+    })
+    .map((coll) => coll.login);
   const issue_opener_username = issue.user.login;
 
   const config = await getConfig(context);
@@ -17,8 +25,17 @@ export default async (context) => {
     issue_opener_username
   );
   if (issue_opener === OpenerIsMaintainer.SKIP) return;
-  const issueComment = context.issue({
-    body: `@${issue_opener} ` + config[issue_opener],
-  });
-  return await context.octokit.issues.createComment(issueComment);
+  if (issue_opener === OpenerIsMaintainer.YES) {
+    return await context.octokit.issues.createComment(
+      context.issue({
+        body: config[issue_opener],
+      })
+    );
+  } else {
+    return await context.octokit.issues.createComment(
+      context.issue({
+        body: `@${issue_opener_username} ` + config[issue_opener],
+      })
+    );
+  }
 };

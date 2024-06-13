@@ -5,12 +5,12 @@ import {
   shouldUnAssign,
 } from "../../src/helpers/should_unassign.js";
 
-describe("Requested Unassignment", () => {
+describe("Unassignment Decision Logic", () => {
   let commenter;
   const assignees = ["assignee1"];
   let config1;
   const config2 = {};
-  test("Requester was already not assigned", () => {
+  test("classifies correctly if Requester was already not assigned", () => {
     commenter = "assignee2";
     config1 = {
       "issue-was-not-assigned": "test",
@@ -25,7 +25,7 @@ describe("Requested Unassignment", () => {
     );
   });
 
-  test("Requester was assigned", () => {
+  test("classifies correctly if Requester was assigned and says to unassign", () => {
     commenter = "assignee1";
     config1 = {
       "unassigned-comment": "test",

@@ -18,5 +18,8 @@ export default async (app, { getRouter }) => {
   app.on("issues.opened", issue_opened);
 
   // Comment is created in an issue by a user
-  app.on("issue_comment.created", issue_comment_created);
+  app.on(
+    ["issue_comment.created", "issue_comment.edited"],
+    issue_comment_created
+  );
 };

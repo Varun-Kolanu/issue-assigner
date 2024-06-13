@@ -2,7 +2,7 @@ import { describe, test, beforeEach } from "node:test";
 import assert from "node:assert";
 import { Assignment, shouldAssign } from "../../src/helpers/should_assign.js";
 
-describe("Requested Assignment", () => {
+describe("Assignment Decision Logic", () => {
   let commenter;
   let assignees = ["assignee1"];
   let config1;
@@ -14,7 +14,7 @@ describe("Requested Assignment", () => {
     numAssignedIssues = 0;
   });
 
-  test("issue already assigned", () => {
+  test("classifies correctly if issue is already assigned", () => {
     commenter = "assignee1";
     config1 = {
       "issue-already-assigned": "test",
@@ -29,7 +29,7 @@ describe("Requested Assignment", () => {
     );
   });
 
-  test("Max assignees reached", () => {
+  test("classifies correctly if Max assignees reached", () => {
     commenter = "assignee2";
     config1 = {
       "max-assignees": 1,
@@ -49,7 +49,7 @@ describe("Requested Assignment", () => {
     );
   });
 
-  test("Max issues reached", () => {
+  test("classifies correctly if Max issues reached", () => {
     commenter = "assignee2";
     config1 = {
       "max-issues-for-user": 1,
@@ -61,7 +61,7 @@ describe("Requested Assignment", () => {
     );
   });
 
-  test("Assign comment exists", () => {
+  test("classifies correctly assignment", () => {
     commenter = "assignee2";
     assignees = [];
     config1 = {

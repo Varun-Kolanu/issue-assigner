@@ -2,7 +2,7 @@
 export default async function getAssignedIssues(context, username) {
   try {
     const response = await context.octokit.issues.listForRepo(
-      context.issue({
+      context.repo({
         assignee: username,
         state: "open",
       })
