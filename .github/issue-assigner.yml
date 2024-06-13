@@ -1,0 +1,12 @@
+name: issue-assigner
+assign-prompt: "@{name} claim"
+issue-already-assigned: "You have already been assigned to this issue."
+max-assignees: 1
+max-assignees-reached: "Sorry, maximum limit for assignees in this issue has reached. Please check other issues or contact a maintainer."
+max-issues-for-user: 1
+assigned-comment: "This issue has been successfully assigned to you! 🚀"
+unassign-prompt: "@{name} abandon"
+issue-was-not-assigned: "You were not assigned to this issue."
+unassigned-comment: "You have been unassigned to this issue successfully."
+issue-opener-not-maintainer: "Thank you for opening this issue. Maintainers will check and approve if seems to be useful."
+issue-opener-is-maintainer: "Comment '@{name} claim' to get this issue assigned or '@{name} abandon' to get this issue unassigned."
