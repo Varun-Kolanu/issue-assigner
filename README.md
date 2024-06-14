@@ -1,8 +1,12 @@
 # GitHub Issue Assigner Bot
 
+[contributing]: /docs/CONTRIBUTING.md
+
 This GitHub bot helps manage issue assignments in a repository by automatically assigning or unassigning issues based on predefined rules and user commands in comments. The bot is implemented using Probot, a framework for building GitHub Apps.
 
 If you find this project helpful, please consider giving it a star ⭐ on GitHub. It helps others discover the project and shows your appreciation for the work!
+
+See probot published app [here](https://probot.github.io/apps/issue-assigner/)
 
 # Features
 
@@ -10,12 +14,12 @@ If you find this project helpful, please consider giving it a star ⭐ on GitHub
 - Limit Assignees: Configure maximum number of assignees allowed per issue.
 - Limit Assigned Issues: Set a limit on the number of issues a user can be assigned to at a time in the repository.
 - Automatic unassignment: Users can request unassignment to an issue by commenting with a specific command.
-- Issue opened comments: Bot greets the user when issue is opened
+- Issue opened comments: Bot greets the user when issue is opened.
 - Customizable Responses: Customize the bot's responses and prompts using a YAML configuration file.
 
 # Usage
 
-1. [Install](https://github.com/apps/issue-assigner) the bot in your account.
+1. [Install](https://github.com/apps/issue-assigner/installations/new) the bot in your account.
 2. After installing the bot, create a file `.github/issue-assigner.yml` in the repo and paste the following content:
 
    ```yml
@@ -68,39 +72,33 @@ If you find this project helpful, please consider giving it a star ⭐ on GitHub
 4. You can edit the values in the yml to customize the comments from the bot.
 5. For example, commenting '@issue-asigner claim' will assign the issue and '@issue-assigner abandon' will remove the assignment.
 
-# Contributing
+See these issues for seeing all features practically: [#3](https://github.com/Varun-Kolanu/issue-assigner/issues/3) and [#4](https://github.com/Varun-Kolanu/issue-assigner/issues/4)
 
-If you have any suggestions or want to report a bug, open an issue or make a pull request.
+See [Contributing guide][contributing] for contributing to the project.
 
-## Prerequisites
+# Folder structure
 
-1. Git installed
-2. Node installed
-
-## Setup
-
-1. Clone the repository
-
-   ```bash
-   git clone https://github.com/Varun-Kolanu/issue-assigner.git
-   ```
-
-2. Open the repo
-
-   ```bash
-   cd issue-assigner
-   ```
-
-3. Install dependencies
-
-   ```bash
-   npm i
-   ```
-
-4. Run the app
-   ```bash
-   npm start
-   ```
+```bash
+.
+├── .github/                          ## configuration files
+│ └── issue-assigner.yml
+├── assets/                           ## assets like images, icons, etc
+├── src/                              ## main source code
+│ ├── classes/                        # classes for event handlers defined
+│ ├── handlers/                       # functions to handle webhook events from github
+│ │ ├── issue_comment.js
+│ │ └── issue_opened.js
+│ ├── helpers/                        # utility functions to help handlers
+│ ├── app.js                          # main file which exports probot app
+│ └── server.js                       # server for the app
+├── test/                             ## tests for app
+│ ├── fixtures/                       # mock data for testing
+│ ├── integration/                    # integration tests
+│ ├── unit/                           # unit tests
+│ └── utils/                          # utility functions for tests
+├── CONTRIBUTING.md                   ## Contributing Guide
+└── README.md                         ## Readme
+```
 
 # License
 

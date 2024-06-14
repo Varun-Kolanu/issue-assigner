@@ -1,6 +1,6 @@
 import axios from "axios";
-import { checkConfig } from "../helpers/check_config.js";
-import replacePlaceholders from "../helpers/replace_name.js";
+import { checkConfig } from "./check_config.js";
+import replacePlaceholders from "./replace_name.js";
 
 export const getConfig = async function (context) {
   // Load the configuration

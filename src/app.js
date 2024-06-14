@@ -1,25 +1,24 @@
-import bodyParser from "body-parser";
-import issue_comment_created from "./handlers/issue_comment_created.js";
-import issue_opened from "./handlers/issue_opened.js";
+import {
+  IssueCommentHandler,
+  IssueOpenerHandler,
+} from "./classes/event_handler.js";
+import routes from "./routes/routes.js";
 
 export default async (app, { getRouter }) => {
-  const router = getRouter("/issue-assigner");
-  router.use(bodyParser.json());
-  router.get("/", async (req, res) => {
-    res.status(200).send("Welcome to Issue Assigner");
-  });
+  // Define routes of server
+  routes(getRouter);
 
-  router.post("/webhook", (req, res) => {
-    console.log("Webhook from marketplace: ", req.body);
-    res.status(200).json({ success: "Webhook received successfully" });
-  });
+  /* Webhooks received */
 
   // Issue opened by a user
-  app.on("issues.opened", issue_opened);
+  app.on("issues.opened", async (context) => {
+    const issueOpenerHandlerObj = new IssueOpenerHandler(context);
+    await issueOpenerHandlerObj.handleEvent();
+  });
 
   // Comment is created in an issue by a user
-  app.on(
-    ["issue_comment.created", "issue_comment.edited"],
-    issue_comment_created
-  );
+  app.on(["issue_comment.created", "issue_comment.edited"], async (context) => {
+    const issueCommentHandlerObj = new IssueCommentHandler(context);
+    await issueCommentHandlerObj.handleEvent();
+  });
 };
