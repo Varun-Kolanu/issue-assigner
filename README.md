@@ -1,21 +1,29 @@
 # GitHub Issue Assigner Bot
 
 [contributing]: /docs/CONTRIBUTING.md
+[usage]: /README.md#usage
+[license]: /LICENSE
 
 This GitHub bot helps manage issue assignments in a repository by automatically assigning or unassigning issues based on predefined rules and user commands in comments. The bot is implemented using Probot, a framework for building GitHub Apps.
 
 If you find this project helpful, please consider giving it a star ⭐ on GitHub. It helps others discover the project and shows your appreciation for the work!
 
-See probot published app [here](https://probot.github.io/apps/issue-assigner/)
+See probot published app [here](https://probot.github.io/apps/issue-assigner/), and live listing on GitHub Marketplace [here](https://github.com/marketplace/issue-assigner)
 
 # Features
 
-- Automatic Assignment: Users can request assignment to an issue by commenting with a specific command.
-- Limit Assignees: Configure maximum number of assignees allowed per issue.
-- Limit Assigned Issues: Set a limit on the number of issues a user can be assigned to at a time in the repository.
-- Automatic unassignment: Users can request unassignment to an issue by commenting with a specific command.
-- Issue opened comments: Bot greets the user when issue is opened.
-- Customizable Responses: Customize the bot's responses and prompts using a YAML configuration file.
+- **Automatic Assignment:** Users can request assignment to an issue by commenting with a specific command.
+- **Limit Assignees:** Configure maximum number of assignees allowed per issue.
+- **Limit Assigned Issues:** Set a limit on the number of issues a user can be assigned to at a time in the repository.
+- **Automatic unassignment:** Users can request unassignment to an issue by commenting with a specific command.
+- **Issue opened comments:** Bot greets the user when issue is opened.
+- **Customizable Responses:** Customize the bot's responses and prompts using a YAML configuration file.
+- **Tests:** The code has robust unit and integration tests.
+- **Object Oriented:** OOPS concepts like Inheritance, Polymorphism are used wherever necessary.
+
+## Note for maintainers:
+
+Assignment and Abandoning of issues doesn't work for users having permissions admin, maintainer or triage, since they already can assign themselves and also to avoid accidental assignment of the issue while explaining a contributor how to claim.
 
 # Usage
 
@@ -76,6 +84,32 @@ See these issues for seeing all features practically: [#3](https://github.com/Va
 
 See [Contributing guide][contributing] for contributing to the project.
 
+# Running in local system
+
+1. Clone the repo with
+
+   ```bash
+   git clone https://github.com/Varun-Kolanu/issue-assigner.git
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Run the development server
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open the link that you see in terminal to install install and configure your GitHub app.
+5. You can see .env being filled with required credentials.
+6. Or to configure manually, create a new github app and make a .env in the root, taking .env.example as a reference.
+7. Create a `.github/issue-assigner.yml` file in the installed repo with the example configuration given [above][usage].
+8. You can test the app in your GitHub issues directly now.
+
 # Folder structure
 
 ```bash
@@ -102,4 +136,4 @@ See [Contributing guide][contributing] for contributing to the project.
 
 # License
 
-[ISC](https://github.com/Varun-Kolanu/issue-assigner/blob/main/LICENSE) © 2024 Varun Kolanu
+[ISC][license] © 2024 Varun Kolanu
