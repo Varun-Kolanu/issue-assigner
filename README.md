@@ -1,14 +1,16 @@
 # GitHub Issue Assigner Bot
 
-[contributing]: /docs/CONTRIBUTING.md
-[usage]: /README.md#usage
-[license]: /LICENSE
-
 This GitHub bot helps manage issue assignments in a repository by automatically assigning or unassigning issues based on predefined rules and user commands in comments. The bot is implemented using Probot, a framework for building GitHub Apps.
 
 If you find this project helpful, please consider giving it a star ⭐ on GitHub. It helps others discover the project and shows your appreciation for the work!
 
-See probot published app [here](https://probot.github.io/apps/issue-assigner/), and live listing on GitHub Marketplace [here](https://github.com/marketplace/issue-assigner)
+See probot published app [here](https://probot.github.io/apps/issue-assigner/), live listing on GitHub Marketplace [here](https://github.com/marketplace/issue-assigner), medium article [here](https://medium.com/@Varun-Kolanu/issue-assigner-a-github-bot-built-using-probot-fa2d11f78e98)
+
+To join the discord server for general discussions and doubts follow the link in [this](https://github.com/Varun-Kolanu/issue-assigner/discussions/5) discussion.
+
+## Contributing
+
+See [Contributing guide][contributing] for contributing to the project.
 
 # Features
 
@@ -75,40 +77,11 @@ Assignment and Abandoning of issues doesn't work for users having permissions ad
    # If the user who opened issue IS a maintainer of the repo
    issue-opener-is-maintainer: "Comment '@{name} claim' to get this issue assigned or '@{name} abandon' to get this issue unassigned."
    ```
-
 3. You can remove a line from yml if you don't need that feature.
 4. You can edit the values in the yml to customize the comments from the bot.
 5. For example, commenting '@issue-asigner claim' will assign the issue and '@issue-assigner abandon' will remove the assignment.
 
 See these issues for seeing all features practically: [#3](https://github.com/Varun-Kolanu/issue-assigner/issues/3) and [#4](https://github.com/Varun-Kolanu/issue-assigner/issues/4)
-
-See [Contributing guide][contributing] for contributing to the project.
-
-# Running in local system
-
-1. Clone the repo with
-
-   ```bash
-   git clone https://github.com/Varun-Kolanu/issue-assigner.git
-   ```
-
-2. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-3. Run the development server
-
-   ```bash
-   npm run dev
-   ```
-
-4. Open the link that you see in terminal to install install and configure your GitHub app.
-5. You can see .env being filled with required credentials.
-6. Or to configure manually, create a new github app and make a .env in the root, taking .env.example as a reference.
-7. Create a `.github/issue-assigner.yml` file in the installed repo with the example configuration given [above][usage].
-8. You can test the app in your GitHub issues directly now.
 
 # Folder structure
 
@@ -137,3 +110,7 @@ See [Contributing guide][contributing] for contributing to the project.
 # License
 
 [ISC][license] © 2024 Varun Kolanu
+
+[contributing]: /CONTRIBUTING.md
+[usage]: /README.md#usage
+[license]: /LICENSE
