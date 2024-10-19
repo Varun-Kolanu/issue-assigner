@@ -9,10 +9,10 @@ export function checkRequest(comment, config) {
     .replace(/\s+/g, " ") // trim whitespace
     .toLowerCase(); // Case insensitive
 
-  if (config[Request.ASSIGN] && comment.includes(config[Request.ASSIGN])) {
+  if (config[Request.ASSIGN] && comment.includes(config[Request.ASSIGN].toLowerCase())) {
     return Request.ASSIGN;
   }
-  if (config[Request.UNASSIGN] && comment.includes(config[Request.UNASSIGN])) {
+  if (config[Request.UNASSIGN] && comment.includes(config[Request.UNASSIGN].toLowerCase())) {
     return Request.UNASSIGN;
   }
   return Request.SKIP;
