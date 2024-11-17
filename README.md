@@ -25,7 +25,9 @@ See [Contributing guide][contributing] for contributing to the project.
 
 ## Note for maintainers:
 
-Assignment and Abandoning of issues doesn't work for users having permissions admin, maintainer or triage, since they already can assign themselves and also to avoid accidental assignment of the issue while explaining a contributor how to claim.
+Assignment and Abandoning of issues doesn't work for users having permissions admin, maintainer or triage in public repos, since they already can assign themselves and also to avoid accidental assignment of the issue while explaining a contributor how to claim.
+
+But the exception is for private repos, since it becomes essential to make a normal contributor too a collaborator to allow them to access the repo and hence this safety feature may interfere with the main functionality.
 
 # Usage
 

@@ -1,18 +1,17 @@
 import { skipCommenters } from "../helpers/skip_commenters.js";
 import getAssignedIssues from "../helpers/get_assigned_issues.js";
 import { issueOrIssues, thisOrThese } from "../helpers/pluralize.js";
-import { getConfig } from "../helpers/config.js";
 import { Request, checkRequest } from "../helpers/check_request.js";
 import { Assignment, shouldAssign } from "../helpers/should_assign.js";
 import { UnAssignment, shouldUnAssign } from "../helpers/should_unassign.js";
 
 export default async function issueCommentHandler() {
   // Fetching comment
-  const { comment } = this.context.payload;
+  const { comment, repository } = this.context.payload;
   const commenter = comment.user.login;
 
-  // If commenter is bot or maintainer.
-  if (skipCommenters(commenter, this.maintainers)) return;
+  // If repository is pubic and commenter is bot or maintainer.
+  if (!repository.private && skipCommenters(commenter, this.maintainers)) return;
 
   // Get assignees of the issue
   const assignees = this.issue.assignees.map(
